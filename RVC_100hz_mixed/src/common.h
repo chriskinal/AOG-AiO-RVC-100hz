@@ -44,7 +44,12 @@ uint16_t ggaMissed;
 
 //#include "reset.h"    // no on board buttons for reset
 //const uint8_t RESET_BTN = A14;          // A13 on Matt's v4.0 test board, A14 ununsed on v5.0a
-//RESET teensyReset(RESET_BTN, 2000, LED_BUILTIN);           // reset.h - btn IO, factory reset PERIOD (ms), led IO 
+//RESET teensyReset(RESET_BTN, 2000, LED_BUILTIN);           // reset.h - btn IO, factory reset PERIOD (ms), led IO
+
+#include <FlexCAN_T4.h>
+FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_256> CAN1_Bus;
+FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_256> CAN2_Bus;
+FlexCAN_T4<CAN3, RX_SIZE_256, TX_SIZE_256> Sensor_Bus;
 
 #include "Encoder.h"
 Encoder encoder(KICKOUT_D_PIN, KICKOUT_A_PIN);    // read single or double input values in Autosteer.ino
