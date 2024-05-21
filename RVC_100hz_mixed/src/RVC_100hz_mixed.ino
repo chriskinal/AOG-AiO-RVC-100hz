@@ -22,6 +22,7 @@ const uint8_t encoderType = 1;  // 1 - single input
 
 void setup()
 {
+  canRvc.Sensor_Setup();
   //Serial.begin(115200);                   // Teensy doesn't need it
   Serial.print("\r\n\n\n*********************\r\nStarting setup...\r\n");
   Serial.print(inoVersion);
@@ -54,7 +55,7 @@ void setup()
 
 void loop()
 {
-  SensorBus_Receive();                      // Check for sensor bus data
+  canRvc.SensorBus_Receive();                      // Check for sensor bus data
   checkForPGNs();                           // zPGN.ino, check for AgIO or SerialESP32 Sending PGNs
   PGNusage.timeOut();
   autoSteerUpdate();                        // Autosteer.ino, update AS loop every 10ms (100hz) regardless of whether there is a BNO installed

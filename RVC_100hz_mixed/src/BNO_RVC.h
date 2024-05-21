@@ -27,7 +27,6 @@ struct BNO_RVC_DATA {
     int16_t angVel;       // running total of angular velocity
 };
 
-
 class BNO_RVC
 {
 private:

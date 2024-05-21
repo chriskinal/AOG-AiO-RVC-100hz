@@ -84,6 +84,10 @@ UBX_Parser ubxParser;
 #include "zFUSEImu.h"
 FUSE_Imu fuseImu;
 
+#include "zCANRVC.h"
+CAN_RVC canRvc;
+
+
 #define PANDA_SINGLE 1
 #define PAOGI_DUAL 0
 bool startup = false;
