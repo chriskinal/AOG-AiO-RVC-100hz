@@ -1,5 +1,4 @@
-
-
+// RVC data X10 and other parts barrowed from BNO_RVC.h by Matt Elias.
 class CAN_RVC
 {
 
