@@ -22,7 +22,7 @@ const uint8_t encoderType = 1;  // 1 - single input
 
 void setup()
 {
-  canRvc.Sensor_Setup();
+  delay(2000); // Small delay to let serial output start
   //Serial.begin(115200);                   // Teensy doesn't need it
   Serial.print("\r\n\n\n*********************\r\nStarting setup...\r\n");
   Serial.print(inoVersion);
@@ -32,6 +32,7 @@ void setup()
   serialSetup();                            // setup.ino
   parserSetup();                            // setup.ino
   BNO.begin(SerialIMU);                     // BNO_RVC.cpp
+  canRvc.Sensor_Setup();                    // CANRVC.h
 
   // v5 has machine outputs, v4 fails outputs.begin so machine is also not init'd
   if (outputs.begin()) {                    // clsPCA9555.cpp
@@ -55,7 +56,6 @@ void setup()
 
 void loop()
 {
-  canRvc.SensorBus_Receive();                      // Check for sensor bus data
   checkForPGNs();                           // zPGN.ino, check for AgIO or SerialESP32 Sending PGNs
   PGNusage.timeOut();
   autoSteerUpdate();                        // Autosteer.ino, update AS loop every 10ms (100hz) regardless of whether there is a BNO installed
@@ -80,8 +80,8 @@ void loop()
     bnoStats.incHzCount();
     bnoStats.update(1);                     // 1 dummy value
   }
+  canRvc.SensorBus_Receive();               // Check for sensor bus data
   BNOusage.timeOut();
-
   // wait 40 msec (F9P) from prev GGA update, then update imu data for next PANDA sentence
   if (imuPandaSyncTrigger && imuPandaSyncTimer >= 40) {
     prepImuPandaData();
