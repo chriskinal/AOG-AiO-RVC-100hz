@@ -44,7 +44,6 @@ public:
 
         while ( -1 )
         {
-            Sensor_Bus.read(SensorData);
             if ( SensorData.buf[0] == 0xAA && SensorData.buf[1] == 0xAA  )
             {
                 //canrvcPresent = true;
@@ -66,18 +65,20 @@ public:
 
         if (Sensor_Bus.read(SensorData))
         {
-            // Serial.print("ID: ");
-            // Serial.print(SensorData.id, HEX);
-            // Serial.print(" Len: ");
-            // Serial.print(SensorData.len, HEX);
-            // Serial.print(" Data: ");
-            // for (uint8_t i = 0; i < 8; i++)
-            // {
-            //     Serial.print(SensorData.buf[i], HEX);
-            //     Serial.print(" ");
-            // }
-            // Serial.println();
-            
+            Serial.print("Millis: ");
+            Serial.print(millis());
+            Serial.print(" ID: ");
+            Serial.print(SensorData.id, HEX);
+            Serial.print(" Len: ");
+            Serial.print(SensorData.len, HEX);
+            Serial.print(" Data: ");
+            for (uint8_t i = 0; i < 8; i++)
+            {
+                Serial.print(SensorData.buf[i], HEX);
+                Serial.print(" ");
+            }
+            Serial.println();
+
             // Check for RVC data header in current CAN frame.
             if ((SensorData.buf[0] == 0xAA) && (SensorData.buf[1] == 0xAA))
             {
