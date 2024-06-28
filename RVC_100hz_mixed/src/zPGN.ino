@@ -533,6 +533,7 @@ void udpNtrip() {
   if (UDP.isRunning) {
     if (millis() > ntripCheckTime) {  // limit update rate to save cpu time
     
+
       unsigned int packetLength = UDP.RTCM.parsePacket(); // this uses most of the cpu time in this function unless SerialGPS has low baud
       ntripCheckTime = millis();                          // make sure we wait at least 1ms before checking again to avoid excessive cpu usage
 

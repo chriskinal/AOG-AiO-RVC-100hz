@@ -5,19 +5,25 @@
 #include "elapsedMillis.h"
 #include "IPAddress.h"
 #include "Arduino.h"
-#include <NativeEthernet.h>
-#include <NativeEthernetUdp.h>
+//#include <NativeEthernet.h>
+//#include <NativeEthernetUdp.h>
 #include <EEPROM.h>
+
+#include "QNEthernet.h"
+
+using namespace qindesign::network;
 
 class Eth_UDP
 {
 public:
 	IPAddress myIP = { 192, 168, 5, 126 };  // 126 default IP for steer module
+  IPAddress myNetmask = {255, 255, 255, 0};
+  IPAddress myGW = {192, 168, 5, 1};
+  IPAddress mydnsServer= {192, 168, 5, 1};
   IPAddress broadcastIP;
   byte mac[6] = { 0x0A, 0x0F, myIP[0], myIP[1], myIP[2], myIP[3] };     // create unique MAC from IP as IP should already be unique
 
-
-	// This modules listens to GPS sent on (carry over from Ace)
+ 	// This modules listens to GPS sent on (carry over from Ace)
   // likely not needed but may be convenient for simulating a GPS receiver on the bench using UDP
 	unsigned int portNMEA_2211 = 2211;     // Why 2211? 22XX=GPS then 2211=GPS1 2222=GPS2 2233=RTCM3 corrections easy to remember.
 	EthernetUDP NMEA;                      // UDP object for incoming NMEA
@@ -75,6 +81,9 @@ public:
     }
 
     Ethernet.setLocalIP(myIP);                  // also non-blocking as opposed to Ethernet.begin(mac, myIP) which block with unplugged/unconnected cable
+    Ethernet.setSubnetMask(myNetmask);
+    Ethernet.setGatewayIP(myGW);
+    Ethernet.setDNSServerIP(mydnsServer);
     Serial.print("\r\n\nEthernet connection set with static IP address");
 
     Serial.print("\r\n- Using MAC address: ");
